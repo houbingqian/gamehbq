@@ -5,10 +5,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class GameResolution {
 	public static void main(String[] args) {
+		int BOX_NUM = 10;
 		int[] boxId = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		int[] secretNum = new int[10];
-		String [] strTemp = new String [10];
-		String [] strHash = new String [10];
+		int[] secretNum = new int[BOX_NUM];
+		String [] strTemp = new String [BOX_NUM];
+		String [] strHash = new String [BOX_NUM];
 		/*
 		 * long currentTime =System.currentTimeMillis();
 		 * System.out.println(currentTime);
@@ -25,16 +26,22 @@ public class GameResolution {
 		    System.out.println(secretNum[m]);
 		}
 	}
+	/**
+	 * 功能：求取神秘数字
+	 * @param id lastHash
+	 * @return i 神秘数字
+	 */
 	private static Integer Resolution(int id,String lastHash) {
+		String SUCCESS_RESULT = "00000";
 		int i;
 		for(i=1;true;i++) {
 			String strTemp = id + lastHash + i;
 			System.out.println(strTemp);
 			String result = SHA256(strTemp);
 			System.out.println(result);
-			String fontNum = result.substring(0, 4);
+			String fontNum = result.substring(0, 5);
 			System.out.println(fontNum);
-			if("00000".equals(fontNum)) {
+			if(SUCCESS_RESULT.equals(fontNum)) {
 				System.out.println("success");
 				System.out.println(i);
 				break;
@@ -42,6 +49,11 @@ public class GameResolution {
 		}
 		return i;	
 	}
+	/**
+	 * 获取hash值
+	 * @param strText
+	 * @return hash值
+	 */
 	private static String SHA256(final String strText){
 	    return SHA(strText, "SHA-256");
 	}
